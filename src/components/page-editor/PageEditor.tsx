@@ -1,5 +1,5 @@
 import { DocumentSettings, Page } from "../../utils/types";
-import { Layout1 } from "../layouts";
+import { RenderPage } from "../render-page/RenderPage";
 
 interface PageEditorProps {
   page: Page;
@@ -14,7 +14,12 @@ export const PageEditor: React.FC<PageEditorProps> = ({
 }) => {
   return (
     <div className="p-8 grow flex items-center justify-center">
-      <Layout1 page={page} onChange={onChange} settings={settings} editable />
+      <RenderPage
+        page={page}
+        onChange={onChange}
+        settings={settings}
+        editable
+      />
     </div>
   );
 };

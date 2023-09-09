@@ -17,21 +17,22 @@ export const PageItemWrapper = ({
   return (
     <div className="relative">
       {index !== undefined && (
-        <span className="absolute top-0 right-full pr-2 font-mono text-xs text-slate-400">
+        <span className="absolute top-0 right-full pr-2 font-mono text-xs text-slate-400 select-none">
           {index + 1}
         </span>
       )}
-      <button
+      <div
         onClick={onClick}
         className={twMerge(
           clsx(
-            "w-full aspect-video rounded-xl border border-slate-200 bg-white hover:border-blue-300 hover:ring-4 hover:ring-blue-50",
-            active && "border-blue-300 ring-4 ring-blue-50"
+            "cursor-pointer w-full aspect-video rounded-xl border border-slate-200 bg-white",
+            "hover:border-blue-300 hover:ring-4 hover:ring-blue-50",
+            active && "border-blue-600 ring-4 ring-blue-50"
           )
         )}
       >
         {children}
-      </button>
+      </div>
     </div>
   );
 };

@@ -23,7 +23,7 @@ function App() {
         h2: faker.lorem.words(5),
         content: faker.lorem.text(),
         bg: faker.color.rgb(),
-        layout: "theme-1",
+        layout: `layout-${faker.number.int({ min: 1, max: 4 })}`,
       })
     ),
   });
@@ -36,11 +36,14 @@ function App() {
       return;
     }
 
+    console.log({ result });
+
     const newPages = Array.from(pages);
     const [reorderedItem] = newPages.splice(result.source.index, 1);
     newPages.splice(result.destination.index, 0, reorderedItem);
 
     setPages(newPages);
+    setCurrentPage(result.destination.index);
   };
 
   useEffect(() => {
@@ -50,19 +53,28 @@ function App() {
     });
   }, [settings, pages, saveData]);
 
+  const onAddPage = () => {
+    setPages((pages) => [
+      ...pages,
+      createPage({
+        layout: `layout-${faker.number.int({ min: 1, max: 3 })}`,
+        bg: faker.color.rgb(),
+      }),
+    ]);
+    setCurrentPage(pages.length);
+  };
+
   return (
     <Layout>
       <Sidebar
         pages={pages}
         currentPage={currentPage}
         onPageChange={(index) => setCurrentPage(index)}
-        onAddPage={() => {
-          setPages((pages) => [...pages, createPage()]);
-          setCurrentPage(pages.length);
-        }}
+        onAddPage={onAddPage}
         onDragEnd={onDragEnd}
       />
       <PageEditor
+        key={currentPage}
         page={pages[currentPage]}
         settings={settings}
         onChange={(page) => {
