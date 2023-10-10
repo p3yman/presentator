@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { faker } from "@faker-js/faker";
 import { Layout } from "./components/layout/Layout";
@@ -27,11 +27,13 @@ function App() {
       })
     ),
   });
-  const [settings, setSettings] = useState<DocumentSettings>(data.settings);
+  const [settings] = useState<DocumentSettings>(data.settings);
   const [pages, setPages] = useState<Page[]>(data.pages);
   const [currentPage, setCurrentPage] = useState(0);
-
-  const onDragEnd = (result) => {
+  const onDragEnd = (result: {
+    destination: { index: SetStateAction<number> };
+    source: { index: number };
+  }) => {
     if (!result.destination) {
       return;
     }
@@ -40,7 +42,7 @@ function App() {
 
     const newPages = Array.from(pages);
     const [reorderedItem] = newPages.splice(result.source.index, 1);
-    newPages.splice(result.destination.index, 0, reorderedItem);
+    newPages.splice(Number(result.destination.index), 0, reorderedItem);
 
     setPages(newPages);
     setCurrentPage(result.destination.index);

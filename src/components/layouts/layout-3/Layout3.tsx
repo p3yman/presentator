@@ -1,12 +1,7 @@
 import { Layout } from "../../../utils/types";
 import { EditableContent } from "../../editable-content/EditableContent";
 
-export const Layout3 = ({
-  page,
-  settings,
-  editable = false,
-  onChange,
-}: Layout) => {
+export const Layout3 = ({ page, editable = false, onChange }: Layout) => {
   return (
     <div
       className="flex justify-center items-center h-full"
